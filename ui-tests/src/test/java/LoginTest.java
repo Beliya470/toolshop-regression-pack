@@ -14,7 +14,8 @@ import org.openqa.selenium.WebDriver;
 
 public class LoginTest {
 
-    private static final String REGISTER_URL = "https://api.practicesoftwaretesting.com/users/register";
+    // the API is only used to make a new customer. For the with-bugs API: mvn test -Dbase.uri=https://...
+    private static final String REGISTER_URL = System.getProperty("base.uri", "https://api.practicesoftwaretesting.com") + "/users/register";
 
     // my own user, made fresh for each run (the shop data is shared and resets)
     private static final String PASSWORD = "Str0ng!Pass#2026";
@@ -51,7 +52,7 @@ public class LoginTest {
     }
 
     @Test
-    @DisplayName("TF40-81: Valid login with a registered user lands on the account page")
+    @DisplayName("TF40-103: Valid login with a registered user lands on the account page")
     void validLoginLandsOnAccountPage() {
         loginPage.open();
         loginPage.loginAs(email, PASSWORD);
@@ -61,7 +62,7 @@ public class LoginTest {
     }
 
     @Test
-    @DisplayName("TF40-82: Login with an unknown email shows an error message")
+    @DisplayName("TF40-104: Login with an unknown email shows an error message")
     void loginWithUnknownEmailShowsError() {
         loginPage.open();
         loginPage.loginAs("nobody.unknown@example.com", "wrong-password-1");

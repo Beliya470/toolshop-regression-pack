@@ -9,7 +9,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 // The tests only say what to check, so if the page changes I fix this one class.
 public class LoginPage {
 
-    private static final String URL = "https://practicesoftwaretesting.com/auth/login";
+    // the clean Toolshop is the default. For the with-bugs UI: mvn test -Dui.url=https://...
+    private static final String URL = System.getProperty("ui.url", "https://practicesoftwaretesting.com") + "/auth/login";
 
     private final WebDriver driver;
     private final WebDriverWait wait;
