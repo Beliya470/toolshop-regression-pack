@@ -37,10 +37,11 @@ public class BaseApiTest {
         return "fellow+" + System.currentTimeMillis() + tag + "@test.com";
     }
 
-    // registers a customer (must work, status 201) and gives back the id from the response
+    // registers a customer (must work, status 201) and gives back the id from the response.
+    // The normal API answers with a text id, the with-bugs API with a number, so the id is turned into text.
     protected static String register(String email, String password) {
         RegisterRequest customer = new RegisterRequest("Anne", "Tester", email, password, "1990-05-15");
-        return given()
+        Object id = given()
             .contentType(ContentType.JSON)
             .body(customer)
         .when()
@@ -48,6 +49,7 @@ public class BaseApiTest {
         .then()
             .statusCode(201)
             .extract().path("id");
+        return String.valueOf(id);
     }
 
     protected static String login(String email, String password) {

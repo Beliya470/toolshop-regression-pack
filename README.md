@@ -19,6 +19,15 @@ Only one part: `mvn -pl api-tests test` or `mvn -pl ui-tests test`.
 | `-Dbase.uri=...` | `https://api.practicesoftwaretesting.com` | The address of the API (API tests, and the API call that makes the customer for the UI test). |
 | `-Dui.url=...` | `https://practicesoftwaretesting.com` | The address of the shop in the browser. |
 | `-Dheadless=true` | off | Chrome runs without a window (for CI). |
+| `-Dregister.flat=true` | off | Only for the with-bugs API: adds address, city and country as plain text to the registration body, because that API refuses the body without them. |
+
+## Run it against the with-bugs shop
+
+```
+mvn test -Dmaven.test.failure.ignore=true -Dregister.flat=true "-Dui.url=https://with-bugs.practicesoftwaretesting.com/#" -Dbase.uri=https://api-with-bugs.practicesoftwaretesting.com
+```
+
+The with-bugs shop opens its pages after a `#`, so the UI address ends with `/#`. Without `-Dregister.flat=true` every test stops at the registration step. The failures I found are in `REPORT.md`.
 
 ## What is in it
 
