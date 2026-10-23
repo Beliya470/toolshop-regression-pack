@@ -29,7 +29,12 @@ public class LoginTest {
     static void registerUser() throws Exception {
         email = "fellow+" + System.currentTimeMillis() + "@test.com";
         String body = "{\"first_name\":\"Anne\",\"last_name\":\"Tester\",\"email\":\"" + email
-                + "\",\"password\":\"" + PASSWORD + "\",\"dob\":\"1990-05-15\"}";
+                + "\",\"password\":\"" + PASSWORD + "\",\"dob\":\"1990-05-15\"";
+        // the with-bugs API wants these three as plain text (-Dregister.flat=true), the normal one does not
+        if (Boolean.getBoolean("register.flat")) {
+            body += ",\"address\":\"1 Main Street\",\"city\":\"Nairobi\",\"country\":\"KE\"";
+        }
+        body += "}";
 
         HttpRequest request = HttpRequest.newBuilder(URI.create(REGISTER_URL))
                 .header("Content-Type", "application/json")
